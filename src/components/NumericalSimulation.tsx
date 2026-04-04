@@ -8,8 +8,16 @@ interface NumericalSimulationProps {
 
 export const NumericalSimulation: React.FC<NumericalSimulationProps> = ({ area, angle }) => {
   // F ∝ (A / d^2) * cos(theta)
-  // Assume d = 1 for simplicity
+  // Updated Logic: 0-16 is Approach (Force = 0)
   const calculateForce = (a: number, deg: number) => {
+    if (deg <= 16) return 0;
+    
+    // Smooth ramp up from 16 to 25
+    if (deg <= 25) {
+      const p = (deg - 16) / 9;
+      return a * p;
+    }
+
     const rad = (deg * Math.PI) / 180;
     return a * Math.cos(rad);
   };
@@ -54,8 +62,9 @@ export const NumericalSimulation: React.FC<NumericalSimulationProps> = ({ area, 
             <Tooltip 
               contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
             />
-            <ReferenceArea x1={0} x2={33} fill="#10b981" fillOpacity={0.1} label="Strong Grip" />
-            <ReferenceArea x1={33} x2={90} fill="#ef4444" fillOpacity={0.1} label="Detachment" />
+            <ReferenceArea x1={0} x2={16} fill="#94a3b8" fillOpacity={0.1} label="Approach" />
+            <ReferenceArea x1={17} x2={45} fill="#10b981" fillOpacity={0.1} label="Strong Grip" />
+            <ReferenceArea x1={46} x2={90} fill="#ef4444" fillOpacity={0.1} label="Detachment" />
             <Line 
               type="monotone" 
               dataKey="force" 
@@ -74,20 +83,20 @@ export const NumericalSimulation: React.FC<NumericalSimulationProps> = ({ area, 
           <thead className="bg-slate-50 text-slate-500 uppercase font-bold">
             <tr>
               <th className="px-4 py-2">Angle Range</th>
-              <th className="px-4 py-2">Adhesion State</th>
+              <th className="px-4 py-2">Simulation State</th>
               <th className="px-4 py-2">Force Efficiency</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             <tr>
-              <td className="px-4 py-2">0° - 20°</td>
-              <td className="px-4 py-2 text-brand-primary font-bold">Optimal Grip</td>
-              <td className="px-4 py-2">94% - 100%</td>
+              <td className="px-4 py-2">0° - 16°</td>
+              <td className="px-4 py-2 text-slate-500 font-bold">Approach</td>
+              <td className="px-4 py-2">0%</td>
             </tr>
             <tr>
-              <td className="px-4 py-2">21° - 45°</td>
-              <td className="px-4 py-2 text-yellow-600 font-bold">Transition</td>
-              <td className="px-4 py-2">70% - 93%</td>
+              <td className="px-4 py-2">17° - 45°</td>
+              <td className="px-4 py-2 text-brand-primary font-bold">Optimal Grip</td>
+              <td className="px-4 py-2">70% - 100%</td>
             </tr>
             <tr>
               <td className="px-4 py-2">46° - 90°</td>
