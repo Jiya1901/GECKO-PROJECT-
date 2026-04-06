@@ -24,10 +24,14 @@ export const NumericalSimulation: React.FC<NumericalSimulationProps> = ({ area, 
 
   const currentForce = calculateForce(area, angle);
 
-  const data = Array.from({ length: 91 }, (_, i) => ({
-    angle: i,
-    force: calculateForce(area, i),
-  }));
+  const data = Array.from({ length: 101 }, (_, i) => {
+    const currentArea = i;
+    return {
+      surface: currentArea,
+      force: calculateForce(currentArea, angle),
+      potentialForce: calculateForce(currentArea, 30), // Reference at 30 degrees
+    };
+  });
 
   return (
     <div className="space-y-6">
@@ -46,25 +50,45 @@ export const NumericalSimulation: React.FC<NumericalSimulationProps> = ({ area, 
         </div>
       </div>
 
-      <div className="h-[300px] w-full mt-4">
+      <div className="h-[300px] w-full mt-4 relative">
+        {/* Trend Indicator Overlay */}
+        <div className="absolute top-0 right-10 z-10 flex items-center gap-2 bg-white/80 backdrop-blur-sm px-3 py-1 rounded-full border border-brand-primary/20 shadow-sm">
+          <div className="w-3 h-3 bg-brand-primary rounded-full animate-pulse"></div>
+          <span className="text-[10px] font-bold text-brand-secondary uppercase tracking-tighter">Linear Scaling: F ∝ A</span>
+        </div>
+
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 0 }}>
+          <LineChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
             <XAxis 
-              dataKey="angle" 
-              label={{ value: 'Angle (θ)', position: 'insideBottom', offset: -5 }} 
-              tick={{ fontSize: 12 }}
+              dataKey="surface" 
+              label={{ value: 'Surface Area (µm²)', position: 'insideBottom', offset: -5, fontSize: 10 }} 
+              tick={{ fontSize: 10 }}
+              domain={[0, 100]}
             />
             <YAxis 
-              label={{ value: 'Force (F)', angle: -90, position: 'insideLeft' }} 
-              tick={{ fontSize: 12 }}
+              label={{ value: 'Force (nN)', angle: -90, position: 'insideLeft', fontSize: 10 }} 
+              tick={{ fontSize: 10 }}
+              domain={[0, 'auto']}
             />
             <Tooltip 
               contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+              formatter={(value: number) => [`${value.toFixed(2)} nN`, 'Force']}
+              labelFormatter={(label) => `Surface: ${label} µm²`}
             />
-            <ReferenceArea x1={0} x2={16} fill="#94a3b8" fillOpacity={0.1} label="Approach" />
-            <ReferenceArea x1={17} x2={45} fill="#10b981" fillOpacity={0.1} label="Strong Grip" />
-            <ReferenceArea x1={46} x2={90} fill="#ef4444" fillOpacity={0.1} label="Detachment" />
+            
+            {/* Show potential trend if current is 0 */}
+            {currentForce === 0 && (
+              <Line 
+                type="monotone" 
+                dataKey="potentialForce" 
+                stroke="#94a3b8" 
+                strokeWidth={1} 
+                strokeDasharray="5 5"
+                dot={false}
+              />
+            )}
+
             <Line 
               type="monotone" 
               dataKey="force" 

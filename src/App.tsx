@@ -36,7 +36,7 @@ const SECTIONS = [
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [area, setArea] = useState(50);
-  const [angle, setAngle] = useState(10);
+  const [angle, setAngle] = useState(30);
 
   useEffect(() => {
     const handleScroll = () => {
