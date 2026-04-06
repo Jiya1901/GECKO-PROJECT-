@@ -38,11 +38,11 @@ export const NumericalSimulation: React.FC<NumericalSimulationProps> = ({ area, 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-brand-primary/10 p-4 rounded-xl border border-brand-primary/20">
           <p className="text-xs uppercase tracking-wider text-brand-secondary font-bold">Surface Area (A)</p>
-          <p className="text-2xl font-mono">{area.toFixed(1)} µm²</p>
+          <p className="text-2xl font-mono text-brand-primary">{area.toFixed(1)} µm²</p>
         </div>
         <div className="bg-brand-primary/10 p-4 rounded-xl border border-brand-primary/20">
           <p className="text-xs uppercase tracking-wider text-brand-secondary font-bold">Contact Angle (θ)</p>
-          <p className="text-2xl font-mono">{angle}°</p>
+          <p className="text-2xl font-mono text-brand-primary">{angle}°</p>
         </div>
         <div className="bg-brand-primary/10 p-4 rounded-xl border border-brand-primary/20">
           <p className="text-xs uppercase tracking-wider text-brand-secondary font-bold">Adhesion Force (F)</p>
