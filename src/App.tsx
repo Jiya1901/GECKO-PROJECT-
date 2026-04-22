@@ -390,10 +390,10 @@ export default function App() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { name: "Anshita Dhingra", id: "J016", sapid: '70092500052', image: "https://drive.google.com/thumbnail?id=1kvD_2YKcth9ou-mRy2nmUPtWnxYWcLgM&sz=w1000" },
-                { name: "Akriti Mehra", id: "J035", sapid: '70092500022', image: "https://drive.google.com/thumbnail?id=1aV5SjTeNaKwdKGsXVlbEsKALDoZsxH9d&sz=w1000" },
-                { name: "Jiya Chheda", id: "J013", sapid: '70092500041', image: "https://drive.google.com/thumbnail?id=1SloBRsU5lRbdWYa2d71jzEL-58Np_aCQ&sz=w1000" },
-                { name: "Anindita Bhaduri", id: "J008", sapid: '70092500014', image: "https://drive.google.com/thumbnail?id=1YDaEgekE5IT3s5zQrXVl2e_RNGbTuHNc&sz=w1000" }
+                { name: "Anshita Dhingra", id: "J016 - J1", sapid: '70092500052', image: "https://drive.google.com/thumbnail?id=1kvD_2YKcth9ou-mRy2nmUPtWnxYWcLgM&sz=w1000" },
+                { name: "Akriti Mehra", id: "J035 - J1", sapid: '70092500022', image: "https://drive.google.com/thumbnail?id=1aV5SjTeNaKwdKGsXVlbEsKALDoZsxH9d&sz=w1000" },
+                { name: "Jiya Chheda", id: "J013 - J1", sapid: '70092500041', image: "https://drive.google.com/thumbnail?id=1SloBRsU5lRbdWYa2d71jzEL-58Np_aCQ&sz=w1000" },
+                { name: "Anindita Bhaduri", id: "J008 - J1", sapid: '70092500014', image: "https://drive.google.com/thumbnail?id=1YDaEgekE5IT3s5zQrXVl2e_RNGbTuHNc&sz=w1000" }
               ].map((member, i) => (
                 <div key={i} className="card text-center hover:bg-brand-primary/5 transition-colors overflow-hidden">
                   <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden border-4 border-brand-primary/20">
